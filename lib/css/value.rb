@@ -23,7 +23,7 @@ module Css
     }
   
     # Creates a new Value by name and parent property.
-    def initialize(name, property)
+    def initialize(name = "", property = Property.new)
       @name = name.strip
       @property = property
     end

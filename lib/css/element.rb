@@ -6,7 +6,7 @@ module Css
   
     # Creates a new Element by name, value and stylesheet.
     # Value can be a String or a Hash, containing the properties of that element.
-    def initialize(name, value, stylesheet)
+    def initialize(name = "", value = {}, stylesheet = Stylesheet.new)
       @name = name.strip
       @stylesheet = stylesheet
       @properties = []

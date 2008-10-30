@@ -1,0 +1,8 @@
+commit e5dbe46fbbcafa5a2d63584e11683ab43006d506
+Author: Johannes J. Schmidt <jo@jolap.(none)>
+Date:   Thu Oct 30 19:13:00 2008 +0100
+
+    Initial Commit
+    
+    Introducing Css Ruby Library.
+    This Project is a child of the 8friends.org vcms.

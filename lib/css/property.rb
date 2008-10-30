@@ -7,7 +7,7 @@ module Css
   
     # Creates a new Property by name, value and parent Element.
     # The value can be a String or Array containing the values of that Property.
-    def initialize(name, value, element)
+    def initialize(name = "", value = {}, element = Element.new)
       @name = name.strip
       @value = value
       @element = element

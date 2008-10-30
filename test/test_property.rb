@@ -2,8 +2,6 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 
 class PropertyTest < Test::Unit::TestCase
   def setup
-    @stylesheet = Stylesheet.new("test", "")
-    @element = Element.new("element1", "", @stylesheet)
     @string = "value1 value2"
     @array = %w{value1 value2}
     @hash = {
@@ -14,12 +12,12 @@ class PropertyTest < Test::Unit::TestCase
   end
 
   def test_initialize_with_string
-    css = Property.new("property1", @string, @element)
+    css = Property.new("property1", @string)
     assert_equal @complete_string, css.to_s
   end
 
   def test_initialize_with_array
-    css = Property.new("property1", @array, @element)
+    css = Property.new("property1", @array)
     assert_equal @complete_string, css.to_s
   end
 end

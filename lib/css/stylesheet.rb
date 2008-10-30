@@ -2,12 +2,11 @@ module Css
   # The Stylesheet is similar to a whole css file.
   # The value is parsed into an Array of Element, each with an Array of Property and Value on initialisation.
   class Stylesheet
-    attr_reader :name, :elements
+    attr_reader :elements
   
     # Creates a new Stylesheet by name and value.
     # Value can be a String or Hash.
-    def initialize(name, value)
-      @name = name.strip
+    def initialize(value = {})
       @elements = []
       if value.kind_of?(Hash)
         value.each do |n, v|
@@ -41,7 +40,7 @@ module Css
     # Returns a String representation of the Stylesheet.
     # The output is just plain CSS.
     def to_s
-      "/* %s */\n%s" % [name, elements.map { |e| e.to_s }.join("\n")]
+      elements.map { |e| e.to_s }.join("\n")
     end
   end
 end
