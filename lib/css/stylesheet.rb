@@ -22,7 +22,7 @@ module Css
     # Adds an Element to the Stylesheet.
     # Look for the existing ones.
     # If the Element is already present, we merge the properties.
-    def add_element(name, value)
+    def add_element(name, value = {})
       return if name == ''
       legacy = find_element(name)
       if legacy

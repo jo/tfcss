@@ -37,27 +37,10 @@ module Css
       :text
     end
   
-    # Returns an id used as html id
-    def css_id
-      names.join('_')
-    end
-  
-    # Returns an id used as html name for input field
-    def css_name
-      '[%s][%s][%s]' % names
-    end
-  
     # Returns a String representation of the value.
     # That is just the name.
     def to_s
       name
-    end
-
-    private
-
-    # Returns an Array of the names of Stylesheet, Element and Property.
-    def names
-      [property.element.stylesheet.name, property.element.name, property.name]
     end
   end
 end

@@ -32,7 +32,7 @@ module Css
   
     # Add a property to the Array of properties.
     # If the property already exists, its values will be overwritten.
-    def add_property(name, value)
+    def add_property(name, value = {})
       return if name == ''
       legacy = find_property(name)
       if legacy
@@ -49,7 +49,7 @@ module Css
   
     # Returns a textual representation of the Element as plain CSS.
     def to_s
-      "%s {\n%s\n}" % [name, properties.map { |p| p.to_s }.join("\n")]
+      "%s {\n%s\n}" % [name, properties.join("\n")]
     end
   end
 end
