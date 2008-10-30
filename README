@@ -1,0 +1,43 @@
+=== Ruby CSS Library
+
+Use Cascading Style Sheets in Ruby.
+
+==== Setup
+
+Install the gem with RubyGems.
+
+   gem install tfcss
+
+==== An example
+
+  require 'css'
+  include Css
+
+  stylesheet = Stylesheet.new 'My Shiny Style', <<STR
+  body {
+    margin: 0;
+  }
+  a img {
+    border: none;
+  }
+  STR
+
+  stylesheet.elements
+
+
+==== Testing
+
+You can run the suite of unit tests using <tt>rake test</tt>.
+
+
+==== Credits and code
+
+By Johannes Jörg Schmidt (schmidt@netzmerk.com), 2008.
+
+Brought to you by TF and Netzmerk.
+
+Project homepage: http://code.netzmerk.com/css
+
+
+Berlin, Germany
+
