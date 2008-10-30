@@ -7,7 +7,7 @@ module Css
   
     # Creates a new Property by name, value and parent Element.
     # The value can be a String or Array containing the values of that Property.
-    def initialize(name = "", value = {}, element = Element.new)
+    def initialize(name = '', value = {}, element = Element.new)
       @name = name.strip
       @value = value
       @element = element
@@ -16,12 +16,12 @@ module Css
         value.each do |n|
           add_value n
         end
-      elsif value.kind_of?(String) && value.strip != ""
+      elsif value.kind_of?(String) && value.strip != ''
         value.strip.split(/\s+/).each do |v|
           add_value v
         end
       else
-        add_value ""
+        add_value ''
       end
     end
   
@@ -32,7 +32,7 @@ module Css
   
     # Returns a String representation of the Property as plain CSS.
     def to_s
-      "  %s: %s;" % [name, values.map { |e| e.to_s }.join(" ").gsub(/ (pt|pc|in|mm|cm|px|em|ex|%)/, '\1')]
+      '  %s: %s;' % [name, values.map { |e| e.to_s }.join(' ').gsub(/ (pt|pc|in|mm|cm|px|em|ex|%)/, '\1')]
     end
   end
 end

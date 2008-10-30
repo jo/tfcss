@@ -1,3 +1,11 @@
+commit 2db62b8726ab534ef899744c7f06adf591d99501
+Author: Johannes J. Schmidt <jo@jolap.(none)>
+Date:   Thu Oct 30 19:25:43 2008 +0100
+
+    added default parameters to all constructors
+    
+    to allow simple use of eg. the Value class.
+
 commit e5dbe46fbbcafa5a2d63584e11683ab43006d506
 Author: Johannes J. Schmidt <jo@jolap.(none)>
 Date:   Thu Oct 30 19:13:00 2008 +0100

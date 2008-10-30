@@ -12,9 +12,9 @@ module Css
         value.each do |n, v|
           add_element n, v
         end
-      elsif value.kind_of?(String) && value.strip != ""
-        value.strip.gsub(/\/\*.*?\*\//m, "").split(/[}]\n*/).each do |entry|
-          add_element entry.gsub(/\{.*$/m, "").strip, entry.gsub(/.*\{/m, "").strip
+      elsif value.kind_of?(String) && value.strip != ''
+        value.strip.gsub(/\/\*.*?\*\//m, '').split(/[}]\n*/).each do |entry|
+          add_element entry.gsub(/\{.*$/m, '').strip, entry.gsub(/.*\{/m, '').strip
         end
       end
     end
@@ -23,7 +23,7 @@ module Css
     # Look for the existing ones.
     # If the Element is already present, we merge the properties.
     def add_element(name, value)
-      return if name == ""
+      return if name == ''
       legacy = find_element(name)
       if legacy
         legacy.merge Element.new(name, value, self)

@@ -6,7 +6,7 @@ module Css
   
     # Creates a new Element by name, value and stylesheet.
     # Value can be a String or a Hash, containing the properties of that element.
-    def initialize(name = "", value = {}, stylesheet = Stylesheet.new)
+    def initialize(name = '', value = {}, stylesheet = Stylesheet.new)
       @name = name.strip
       @stylesheet = stylesheet
       @properties = []
@@ -14,9 +14,9 @@ module Css
         value.each do |n, v|
           add_property n, v
         end
-      elsif value.kind_of?(String) && value.strip != ""
+      elsif value.kind_of?(String) && value.strip != ''
         value.strip.split(/;/).each do |property|
-          add_property property.gsub(/:.*$/m, "").strip, property.gsub(/^.*:/m, "").strip
+          add_property property.gsub(/:.*$/m, '').strip, property.gsub(/^.*:/m, '').strip
         end
       end
     end
@@ -33,7 +33,7 @@ module Css
     # Add a property to the Array of properties.
     # If the property already exists, its values will be overwritten.
     def add_property(name, value)
-      return if name == ""
+      return if name == ''
       legacy = find_property(name)
       if legacy
         legacy.values = Property.new(name, value, self).values

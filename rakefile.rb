@@ -21,7 +21,7 @@ require 'rake/gempackagetask'
 
 require 'lib/css'
 
-desc "Copyright Info"
+desc 'Copyright Info'
 task :default do
   puts <<STR
 Ruby Css Library Copyright (C) 2008 Johannes Jörg Schmidt
@@ -31,14 +31,14 @@ under certain conditions; type `rake license' for details.
 STR
 end
 
-desc "Display License"
+desc 'Display License'
 task :license do
-  puts File.read("LICENSE")
+  puts File.read('LICENSE')
 end
 
-desc "Display Warranty Information"
+desc 'Display Warranty Information'
 task :warranty do
-  puts File.read("LICENSE").gsub(/^.*15\. Disclaimer of Warranty\.\s+(.*)16\. .*/m, '\1')
+  puts File.read('LICENSE').gsub(/^.*15\. Disclaimer of Warranty\.\s+(.*)16\. .*/m, '\1')
 end
 
 desc 'Run the unit tests.'
