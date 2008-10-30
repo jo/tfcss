@@ -15,10 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-require 'lib/css/stylesheet'
-require 'lib/css/element'
-require 'lib/css/property'
-require 'lib/css/value'
+require File.join(File.dirname(__FILE__), 'css/stylesheet')
+require File.join(File.dirname(__FILE__), 'css/element')
+require File.join(File.dirname(__FILE__), 'css/property')
+require File.join(File.dirname(__FILE__), 'css/value')
 
 
 # Css module. 
