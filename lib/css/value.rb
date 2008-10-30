@@ -5,41 +5,50 @@ module Css
     attr_reader :value, :unit, :property
   
     UNITS = %w{pt pc in mm cm px em ex %}
-    TYPES = {
-      'color' => [:color],
-      'background' => [:color, :url, :repeat, :positiony, :positionx],
-      'margin' => [:unit, :unit, :unit, :unit],
-      'padding' => [:unit, :unit, :unit, :unit],
-      'font' => [:fontstyle, :fontvariant, :fontweight, :unit, :fontfamily],
-      'border' => [:unit, :borderstyle, :color],
-      'display' => [:displaytype],
-      'overflow' => [:overflows],
-      'font-size' => [:unit],
-      'height' => [:unit],
-      'width' => [:unit],
-      'min-height' => [:unit],
-      'min-width' => [:unit],
-      'list-style-type' => [:listtype],
-      'line-height' => [:unit],
+    VALUES = {
+      'text-decoration' => %w{none underline},
+      'text-align' => %w{left center justify right},
+      'font-weight' => %w{normal bold},
+      'float' => %w{none left right},
+      'clear' => %w{none both left right},
+      'position' => %w{absolute relative},
+      'display' => %w{none block inline},
+      'list-styl-type' => %w{none square bullet circle},
     }
   
     # Creates a new Value by value and parent property.
     def initialize(value = '', property = Property.new)
-      @value = value.strip
-      if value =~ /\d+(#{UNITS.join('|')})$/
+      @property = property
+      if value.kind_of?(Array)
+        @value = value.join('')
+      elsif value.kind_of?(Hash)
+        if value.keys.all? { |k| k.respond_to?(:<=>) }
+          @value = value.keys.sort.map { |k| value[k] }.join
+        elsif value.keys.all? { |k| k.kind_of?(Symbol) }
+          @value = value.keys.map { |k| k.to_s }.sort.map { |k| value[k.to_sym] }.join
+        else
+          @value = value.values.join
+        end
+      else
+        @value = value
+      end
+      return unless @value
+      @value = @value.strip
+      if @value =~ /\d+(#{UNITS.join('|')})$/
         @unit = @value.gsub(/^\d+(#{UNITS.join('|')})$/, '\1')
         @value.gsub!(/(#{UNITS.join('|')})$/, '')
       end
-      @property = property
+      @unit ||= 'px' if @value == '0'
+    end
+
+    # returns the position of the value.
+    def index
+      property.values.index(self)
     end
   
-    # Returns the type of the value.
-    # Try to fetch it from the TYPES hash by property's value and the index of the current value from property's values.
-    # Returns :text if none was found.
-    def type
-      TYPES[property.value][property.values.index(self)]
-    rescue => e
-      :text
+    def choices
+      return unless property
+      VALUES[property.name]
     end
   
     # Returns a String representation of the value.

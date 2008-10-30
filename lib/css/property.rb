@@ -44,7 +44,7 @@ module Css
     def add_value(name = '')
       @values << Value.new(name, self)
     end
-  
+
     # Returns a String representation of the Property as plain CSS.
     def to_s
       '  %s: %s;' % [name, values.join(' ')]
