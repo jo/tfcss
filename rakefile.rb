@@ -21,35 +21,18 @@ require 'rake/gempackagetask'
 
 require 'lib/css'
 
-desc 'Copyright Info'
-task :default do
-  puts <<STR
-Ruby Css Library Copyright (C) 2008 Johannes Jörg Schmidt
-This program comes with ABSOLUTELY NO WARRANTY; for details type `rake warranty'.
-This is free software, and you are welcome to redistribute it
-under certain conditions; type `rake license' for details.
-STR
-end
-
-desc 'Display License'
-task :license do
-  puts File.read('LICENSE')
-end
-
-desc 'Display Warranty Information'
-task :warranty do
-  puts File.read('LICENSE').gsub(/^.*15\. Disclaimer of Warranty\.\s+(.*)16\. .*/m, '\1')
-end
+desc 'Default: run unit tests.'
+task :default => :test
 
 desc 'Run the unit tests.'
 Rake::TestTask.new do |t|
-  t.libs << 'test'
-  t.test_files = FileList['test/test_*.rb'].exclude('test_helper.rb')
+  t.libs << 'lib'
+  t.pattern = 'test/**/*_test.rb'
   t.verbose = false
 end
 
 desc 'Generate documentation.'
-Rake::RDocTask.new(:rdoc) do |rdoc|
+Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'doc'
   rdoc.title    = 'Ruby CSS Library'
   rdoc.options << '--all' << '--inline-source' << '--line-numbers'

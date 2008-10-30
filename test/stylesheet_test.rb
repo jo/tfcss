@@ -11,7 +11,15 @@ class StylesheetTest < Test::Unit::TestCase
   property3: value3;
 }
 STR
-    @hash = {
+  end
+
+  def test_initialize_with_string
+    css = Stylesheet.new(@string)
+    assert_equal @string.strip, css.to_s
+  end
+
+  def test_initialize_with_hash
+    hash = {
       "#element1" =>
       {
         "property1" => "value1",
@@ -22,15 +30,7 @@ STR
         "property3" => "value3"
       }
     }
-  end
-
-  def test_initialize_with_string
-    css = Stylesheet.new(@string)
-    assert_equal @string.strip, css.to_s
-  end
-
-  def test_initialize_with_hash
-    css = Stylesheet.new(@hash)
+    css = Stylesheet.new(hash)
     assert_equal @string.strip, css.to_s
   end
 end
