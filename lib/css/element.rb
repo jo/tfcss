@@ -51,6 +51,10 @@ module Css
     def index
       stylesheet.elements.index(self)
     end
+
+    def id
+      [index, name].join('-')
+    end
   
     # Returns a textual representation of the Element as plain CSS.
     def to_s

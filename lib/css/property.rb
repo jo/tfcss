@@ -50,6 +50,15 @@ module Css
       values.join(' ')
     end
 
+    # returns the position of the property
+    def index
+      element.properties.index(self)
+    end
+
+    def id
+      [index, name].join('-')
+    end
+
     # Returns a String representation of the Property as plain CSS.
     def to_s
       '  %s: %s;' % [name, value]
