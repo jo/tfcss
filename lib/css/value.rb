@@ -6,14 +6,19 @@ module Css
   
     UNITS = %w{pt pc in mm cm px em ex %}
     VALUES = {
-      'text-decoration' => %w{none underline},
-      'text-align' => %w{left center justify right},
-      'font-weight' => %w{normal bold},
-      'float' => %w{none left right},
+      'background-repeat' => %w{no-repeat repeat repeat-x repeat-y},
       'clear' => %w{none both left right},
-      'position' => %w{absolute relative},
       'display' => %w{none block inline},
+      'float' => %w{none left right},
+      'font-weight' => %w{normal bold bolder lighter},
+      'font-variant' => %w{normal small-caps},
+      'font-style' => %w{normal italic oblique},
+      'font-family' => ['sans-serif', 'serif', 'monospace', 'Verdana, sans-serif', 'Times, serif'],
+      'font-' => %w{normal },
       'list-styl-type' => %w{none square bullet circle},
+      'position' => %w{absolute relative},
+      'text-align' => %w{left center justify right},
+      'text-decoration' => %w{none underline},
     }
   
     # Creates a new Value by value and parent property.
@@ -54,6 +59,11 @@ module Css
     def color?
       false unless property
       property.name =~ /color/ || property.name == 'background' && index == 0
+    end
+  
+    def image?
+      false unless property
+      property.name =~ /image/ || property.name == 'background' && index == 1
     end
   
     # Returns a String representation of the value.

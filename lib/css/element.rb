@@ -11,8 +11,14 @@ module Css
       @stylesheet = stylesheet
       @properties = []
       if value.kind_of?(Hash)
-        value.each do |n, v|
-          add_property n, v
+        if value.keys.all? { |k| k.respond_to?(:<=>) }
+          value.keys.sort.each do |k|
+            add_property k.gsub(/^\d+-/, ''), value[k]
+          end
+        else
+          value.each do |n, v|
+            add_property n, v
+          end
         end
       elsif value.kind_of?(String) && value.strip != ''
         value.strip.split(/;/).each do |property|

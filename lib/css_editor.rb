@@ -5,30 +5,30 @@ module CssEditor
 
     def css_editor(attribute, options = {})
       object = @template.instance_variable_get("@#{self.object_name}")
-      stylesheet self.object_name, attribute, object.send(attribute), object
+      stylesheet self.object_name, attribute, object.send(attribute), object, options
     end
 
     private
 
-    def stylesheet(object_name, attribute, stylesheet, object)
+    def stylesheet(object_name, attribute, stylesheet, object, options)
       [
         content_tag(:a, 'Experten', :href => '?expert=true', :class => :expert),
-        stylesheet.elements.map { |e| element(object_name, attribute, e, object) }.join("\n")
+        stylesheet.elements.map { |e| element(object_name, attribute, e, object, options) }.join("\n")
       ].join("\n")
     end
 
-    def element(object_name, attribute, element, object)
-      content_tag :fieldset, content_tag(:legend, display(element.name)) + element.properties.map { |p| property(object_name, attribute, p) }.join("\n")
+    def element(object_name, attribute, element, object, options)
+      content_tag :fieldset, content_tag(:legend, display(element.name)) + element.properties.map { |p| property(object_name, attribute, p, options) }.join("\n")
     end
 
-    def property(object_name, attribute, property)
+    def property(object_name, attribute, property, options)
       content_tag :p, [
         content_tag(:label, display(property.name)),
-        property.values.map { |v| value(object_name, attribute, v, object) }.join("\n"),
+        property.values.map { |v| value(object_name, attribute, v, object, options) }.join("\n"),
       ].join("\n")
     end
 
-    def value(object_name, attribute, value, object)
+    def value(object_name, attribute, value, object, options)
       names = [object_name, attribute, value.property.element.id, value.property.id, value.index]
       name = '%s[%s][%s][%s][%d]' % names
       id = names.join('_')
@@ -38,6 +38,8 @@ module CssEditor
         out << content_tag(:input, nil, :name => '%s[0]' % name, :id => '%s_0' % id, :class => "colorpicker", :value => value.value, :size => 5)
         img = content_tag(:img, nil, :src => "/images/picker.png")
         out << content_tag(:a, img, :class => :picker, :onclick => "javascript:TCP.popup(document.forms['edit_#{object_name}_#{object.id}'].elements['#{'%s_0' % id}'])")
+      elsif value.image?
+        out << content_tag(:select, options_for_select(options[:images], value.value), :name => '%s[0]' % name, :id => '%s_0' % id)
       elsif value.choices
         out << content_tag(:select, options_for_select(value.choices.map { |c| [display(c), c] }, value.value), :name => '%s[0]' % name, :id => '%s_0' % id)
       else
@@ -51,15 +53,19 @@ module CssEditor
 
     NAMES = {
       '' => '',
+      '' => '',
+      '' => '',
       'a' => 'Link',
       'absolute' => 'Absolut',
       'acronym' => 'Abkürzung',
       'active' => 'Aktiv',
       'background' => 'Hintergrund',
+      'background-position' => 'Hintergrund Position (horizonatal/vertikal)',
       'benefits' => 'Nutzen',
       'block' => 'Block',
       'body' => 'Körper',
       'bold' => 'Fett',
+      'bolder' => 'extrafett',
       'border' => 'Rahmen',
       'both' => 'Beide',
       'bottom' => 'Unten',
@@ -71,7 +77,9 @@ module CssEditor
       'content' => 'Inhalt',
       'display' => 'Anzeigeart',
       'div' => 'Box',
+      'min' => 'Minimale',
       'explanation' => 'Erklährung',
+      'family' => 'Familie',
       'float' => 'Fluss',
       'font' => 'Schrift',
       'font-weight' => 'Schriftstärke',
@@ -87,17 +95,22 @@ module CssEditor
       'href' => 'Adresse',
       'html' => 'Seite',
       'id' => 'Id',
+      'image' => 'Bild',
       'inline' => 'Im Fluss',
+      'italic' => 'kursiv',
       'justify' => 'Blocksatz',
       'left' => 'Links',
       'letter-spacing' => 'Zeichenabstand',
       'li' => 'Listenelement',
+      'lighter' => 'dünner',
       'link' => 'Link',
       'linkList' => 'Menu',
       'list-style-type' => 'Listenart',
       'main' => 'Alles',
       'margin' => 'Außenabstand',
+      'no' => 'keine',
       'none' => 'Kein',
+      'oblique' => 'schräggestellt',
       'ol' => 'Geordnete Liste',
       'overflow' => 'Überfluss',
       'p' => 'Absatz',
@@ -105,13 +118,18 @@ module CssEditor
       'p2' => '2.Absatz',
       'padding' => 'Innenabstand',
       'participation' => 'Beteiligung',
+      'position' => 'Position',
       'preamble' => 'Präambel',
       'quickSummary' => 'Kurzzusammenfassung',
       'relative' => 'Relativ',
+      'repeat' => 'Wiederholung',
       'right' => 'Rechts',
       'sidebar_left' => 'Seitenleiste links',
       'sidebar_right' => 'Seitenleiste rechts',
+      'size' => 'Größe',
+      'small-caps' => 'Kapitälchen',
       'span' => 'Element',
+      'style' => 'Stil',
       'stylesheet' => 'Style',
       'supportingText' => 'Unterstützender Text',
       'text-align' => 'Ausrichtung',
@@ -119,8 +137,11 @@ module CssEditor
       'top' => 'Oben',
       'ul' => 'Ungeordnete Liste',
       'underline' => 'Unterstrichen',
+      'variant' => 'Variante',
       'visited' => 'Besucht',
       'width' => 'Breite',
+      'x' => 'horizontal',
+      'y' => 'vertikal',
     }.freeze
 
     def display(text)
