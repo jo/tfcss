@@ -9,8 +9,14 @@ module Css
     def initialize(value = {})
       @elements = []
       if value.kind_of?(Hash)
-        value.each do |n, v|
-          add_element n, v
+        if value.keys.all? { |k| k.respond_to?(:<=>) }
+          value.keys.sort.each do |k|
+            add_element k.gsub(/^\d+-/, ''), value[k]
+          end
+        else
+          value.each do |n, v|
+            add_element n, v
+          end
         end
       elsif value.kind_of?(String) && value.strip != ''
         value.strip.gsub(/\/\*.*?\*\//m, '').split(/[}]\n*/).each do |entry|

@@ -29,7 +29,7 @@ module CssEditor
     end
 
     def value(object_name, attribute, value, object)
-      names = [object_name, attribute, value.property.element.name, value.property.name, value.index]
+      names = [object_name, attribute, [value.property.element.index, value.property.element.name].join('-'), value.property.name, value.index]
       name = '%s[%s][%s][%s][%d]' % names
       id = names.join('_')
       out = []

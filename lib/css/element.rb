@@ -46,6 +46,11 @@ module Css
     def find_property(name)
       @properties.find { |p| p.name == name }
     end
+
+    # returns the position of the element
+    def index
+      stylesheet.elements.index(self)
+    end
   
     # Returns a textual representation of the Element as plain CSS.
     def to_s
