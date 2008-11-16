@@ -3,7 +3,8 @@ module Css
   # The Property has a reference to its parent Element (which references its parent Stylesheet).
   # The Property has an Array of Value.
   class Property
-    attr_reader :name, :element, :values
+    attr_reader :name, :element
+    attr_accessor :values
   
     # Creates a new Property by name, value and parent Element.
     # The value can be a String or Array containing the values of that Property.
@@ -45,9 +46,13 @@ module Css
       @values << Value.new(name, self)
     end
 
+    def value
+      values.join(' ')
+    end
+
     # Returns a String representation of the Property as plain CSS.
     def to_s
-      '  %s: %s;' % [name, values.join(' ')]
+      '  %s: %s;' % [name, value]
     end
   end
 end

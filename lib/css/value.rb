@@ -34,8 +34,8 @@ module Css
       end
       return unless @value
       @value = @value.strip
-      if @value =~ /\d+(#{UNITS.join('|')})$/
-        @unit = @value.gsub(/^\d+(#{UNITS.join('|')})$/, '\1')
+      if @value =~ /[\d\.]+(#{UNITS.join('|')})$/
+        @unit = @value.gsub(/^[\d\.]+(#{UNITS.join('|')})$/, '\1')
         @value.gsub!(/(#{UNITS.join('|')})$/, '')
       end
       @unit ||= 'px' if @value == '0'
@@ -49,6 +49,11 @@ module Css
     def choices
       return unless property
       VALUES[property.name]
+    end
+
+    def color?
+      false unless property
+      property.name =~ /color/ || property.name == 'background' && index == 0
     end
   
     # Returns a String representation of the value.
