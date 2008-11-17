@@ -66,7 +66,6 @@ module CssEditor
       'active' => 'Aktiv',
       'align' => 'Ausrichtung',
       'background' => 'Hintergrund',
-      'background-position' => 'Hintergrund Position (horizonatal/vertikal)',
       'benefits' => 'Nutzen',
       'block' => 'Block',
       'body' => 'Körper',
