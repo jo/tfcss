@@ -61,6 +61,12 @@ module Css
     def id
       [index, name].join('-')
     end
+
+    def grouped_properties
+      group_names = properties.map { |p| p.firstname }.uniq
+      groups = group_names.map { |g| [ g, properties.select { |p| p.name =~ /^#{g}/ } ] }
+      groups.select { |g| !g.last.empty? }.sort { |a,b| a.first <=> b.first }
+    end
   
     # Returns a textual representation of the Element as plain CSS.
     def to_s

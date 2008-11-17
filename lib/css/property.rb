@@ -55,6 +55,14 @@ module Css
       element.properties.index(self)
     end
 
+    def firstname
+      name.split('-').first
+    end
+
+    def lastname
+      name.split('-').last
+    end
+
     def id
       [index, name].join('-')
     end

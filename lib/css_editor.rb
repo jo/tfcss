@@ -18,12 +18,19 @@ module CssEditor
     end
 
     def element(object_name, attribute, element, object, options)
-      content_tag :fieldset, content_tag(:legend, display(element.name)) + element.properties.map { |p| property(object_name, attribute, p, options) }.join("\n")
+      content_tag :fieldset, content_tag(:legend, display(element.name)) +
+        element.grouped_properties.map { |p| property_group(object_name, attribute, p.first, p.last, options) }.join("\n")
+    end
+
+    def property_group(object_name, attribute, property_group_name, properties, options)
+      content_tag :fieldset, content_tag(:legend, display(property_group_name)) +
+        properties.map { |p| property(object_name, attribute, p, options) }.join("\n"),
+        :class => 'property-group'
     end
 
     def property(object_name, attribute, property, options)
       content_tag :p, [
-        content_tag(:label, display(property.name)),
+        content_tag(:label, display(property.lastname)),
         property.values.map { |v| value(object_name, attribute, v, object, options) }.join("\n"),
       ].join("\n")
     end
@@ -53,12 +60,11 @@ module CssEditor
 
     NAMES = {
       '' => '',
-      '' => '',
-      '' => '',
       'a' => 'Link',
       'absolute' => 'Absolut',
       'acronym' => 'Abkürzung',
       'active' => 'Aktiv',
+      'align' => 'Ausrichtung',
       'background' => 'Hintergrund',
       'background-position' => 'Hintergrund Position (horizonatal/vertikal)',
       'benefits' => 'Nutzen',
@@ -77,7 +83,6 @@ module CssEditor
       'content' => 'Inhalt',
       'display' => 'Anzeigeart',
       'div' => 'Box',
-      'min' => 'Minimale',
       'explanation' => 'Erklährung',
       'family' => 'Familie',
       'float' => 'Fluss',
@@ -108,6 +113,7 @@ module CssEditor
       'list-style-type' => 'Listenart',
       'main' => 'Alles',
       'margin' => 'Außenabstand',
+      'min' => 'Minimale',
       'no' => 'keine',
       'none' => 'Kein',
       'oblique' => 'schräggestellt',
@@ -132,6 +138,7 @@ module CssEditor
       'style' => 'Stil',
       'stylesheet' => 'Style',
       'supportingText' => 'Unterstützender Text',
+      'text' => 'Text',
       'text-align' => 'Ausrichtung',
       'text-decoration' => 'Schriftdekoration',
       'top' => 'Oben',
